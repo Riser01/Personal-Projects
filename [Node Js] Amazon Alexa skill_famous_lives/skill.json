@@ -1,0 +1,183 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "examplePhrases": [
+            "Alexa, ask famous birthday",
+            "Alexa, ask famous american",
+            "Alexa, ask famous elon musk"
+          ],
+          "keywords": [
+            "Famous",
+            "celebrity",
+            "star",
+            "actor",
+            "politician",
+            "indian",
+            "american",
+            "facts",
+            "knowledge",
+            "stars",
+            "youtube",
+            "lives",
+            "education",
+            "love",
+            "Like",
+            "great",
+            "gods"
+          ],
+          "name": "Famous Lives",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/1565/b20a587312914c15bb936183f2488b7d/APP_ICON?versionId=ed04HCTj6bd44MNqs6I4AE_FeKWtBrjT&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=kSFSBMI8aeQFfBmVHR3Tj%2FwuToU%3D",
+          "description": "learn all the Famous People who were Born Today,Query them based on their name ,their occupation and their birthday with just one voice command.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/1d06/bc38d868f77544a8804f0fca410bf3f9/APP_ICON_LARGE?versionId=AHAmFQXPUAzdQkX5sgHCrjGp62sJr4ON&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=%2BnetImnJn5fsRS90bz0IqbFwztI%3D"
+        },
+        "en-CA": {
+          "summary": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "examplePhrases": [
+            "Alexa, ask famous birthday",
+            "Alexa, ask famous birthday Canadian",
+            "Alexa, ask famous birthday Elon Musk"
+          ],
+          "keywords": [
+            "Famous",
+            "celebrity",
+            "star",
+            "actor",
+            "politician",
+            "indian",
+            "american",
+            "facts",
+            "knowledge",
+            "stars",
+            "youtube",
+            "lives",
+            "education",
+            "love",
+            "Like",
+            "great",
+            "gods"
+          ],
+          "name": "Famous Lives",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/301e/b7e53406e179441c831980ec71729c12/APP_ICON?versionId=jyy8vcEyimUUYcpzqo.dnQ8bMaUu6PoD&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=kdL5NCHtiy7BZDR4nKlWv0ZsfM0%3D",
+          "description": "learn all the Famous People who were Born Today,Query them based on their name ,their occupation and their birthday with just one voice command.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/8d27/0259e0c628314d4ba0df23f12a6e8058/APP_ICON_LARGE?versionId=azOJIyp0ayGuYBf3smZezJiSo1tyH2MS&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=hg6NBWri45LZls4AGLBP1rjJUeg%3D"
+        },
+        "en-IN": {
+          "summary": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "examplePhrases": [
+            "Alexa, ask famous birthday indian",
+            "Alexa, ask famous birthday Abdul Kalam",
+            "Alexa, ask famous actors"
+          ],
+          "keywords": [
+            "Famous",
+            "celebrity",
+            "star",
+            "actor",
+            "politician",
+            "indian",
+            "american",
+            "facts",
+            "knowledge",
+            "stars",
+            "youtube",
+            "lives",
+            "education",
+            "love",
+            "Like",
+            "great",
+            "gods"
+          ],
+          "name": "Famous Lives",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/798d/50f8e3a9181b4be0ad4445f48307e107/APP_ICON?versionId=SDBq4eJbg0OnPEO5IqDJbT.vHRsFXwha&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=lKQuBHIjDPpUnQhTcysLBDd%2F2S4%3D",
+          "description": "learn all the Famous People who were Born Today,Query them based on their name ,their occupation and their birthday with just one voice command.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/6ee2/5584a1af6d77405ab7012fe67c0bd62b/APP_ICON_LARGE?versionId=cgsUGYijoxATKFXxqapu9EMguheVAJjk&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=7dAxU%2BZ%2F%2FWAQxfP32lHIT2Mu5w8%3D"
+        },
+        "en-AU": {
+          "summary": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "examplePhrases": [
+            "Alexa, ask famous",
+            "Alexa, ask famous birthday australian",
+            "Alexa, ask famous birthday Hugh Jackman"
+          ],
+          "keywords": [
+            "Famous",
+            "celebrity",
+            "star",
+            "actor",
+            "politician",
+            "indian",
+            "american",
+            "facts",
+            "knowledge",
+            "stars",
+            "youtube",
+            "lives",
+            "education",
+            "love",
+            "Like",
+            "great",
+            "gods"
+          ],
+          "name": "Famous Lives",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/4ed9/68563389e2a349ef8fc36859748d3106/APP_ICON?versionId=w3wGnUz0pkBrEQnbmaAIQFufhelBsfAs&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=vZRDjkYHww6PHGuKCeWkF33Nr3Q%3D",
+          "description": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/dbd3/7f6fbf1dadf740acaf1c79b17b3687a5/APP_ICON_LARGE?versionId=BHlfxPXfy3QgpDRbQX9gL8Ho24JFpVL8&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=oXjrwT1RKOrDdBrpWusobUDeXwg%3D"
+        },
+        "en-GB": {
+          "summary": "Know the Famous People who were Born Today,search them based on their work, nationality and name.-just one voice command.",
+          "examplePhrases": [
+            "Alexa, ask famous david beckham",
+            "Alexa, ask famous birthday",
+            "Alexa, ask famous actors"
+          ],
+          "keywords": [
+            "Famous",
+            "celebrity",
+            "star",
+            "actor",
+            "politician",
+            "indian",
+            "american",
+            "facts",
+            "knowledge",
+            "stars",
+            "youtube",
+            "lives",
+            "education",
+            "love",
+            "Like",
+            "great",
+            "gods"
+          ],
+          "name": "Famous Lives",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/ccf2/57c0d407e73a4e4d985bc825249b4707/APP_ICON?versionId=.9Z79FvPKpXAmWy5pv7X56I9mDwlGa2C&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=ipIJ4cM8llweMRbmT%2FtJXodot9o%3D",
+          "description": "learn all the Famous People who were Born Today,Query them based on their name ,their occupation and their birthday with just one voice command.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5dc5/8f47a2fd5b1a4180b56a9feb94527b2e/APP_ICON_LARGE?versionId=.xw.gPXFw8XcuHILCJeb0_j17pfyzNrq&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1531725831&Signature=kPUvZIeQrkG91krZv%2BJVtfMKcZI%3D"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "just say ask famous birthday and say go on",
+      "category": "CHILDRENS_EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": ".\\lambda\\us-west-2_famous_lives"
+        },
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "isChildDirected": true,
+      "usesPersonalInfo": false
+    }
+  }
+}

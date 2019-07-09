@@ -1,0 +1,52 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.8b1cb1f2-264b-48fe-80a5-2f62ac89edec",
+      "was_cloned": true,
+      "resources": {
+        "manifest": {
+          "eTag": "e05922e866828c1e3b62c8fd2b58c8f8"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "9f9e5715cebd0f99c9b123e4d58e68a2"
+          },
+          "en-CA": {
+            "eTag": "e6678bcdce4881657468ec3f11931ceb"
+          },
+          "en-IN": {
+            "eTag": "e6678bcdce4881657468ec3f11931ceb"
+          },
+          "en-AU": {
+            "eTag": "e6678bcdce4881657468ec3f11931ceb"
+          },
+          "en-GB": {
+            "eTag": "e6678bcdce4881657468ec3f11931ceb"
+          }
+        },
+        "lambda": [
+          {
+            "arn": "arn:aws:lambda:us-west-2:649739026317:function:famous_lives",
+            "awsRegion": "us-west-2",
+            "functionName": "famous_lives",
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "revisionId": "6662f4d6-c685-4ed0-bbd9-3a5d9c4b3773"
+          }
+        ]
+      },
+      "merge": {
+        "manifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "arn:aws:lambda:us-west-2:649739026317:function:famous_lives"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

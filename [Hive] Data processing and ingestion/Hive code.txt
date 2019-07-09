@@ -1,0 +1,206 @@
+
+-- Data Ingestion and Processing - Assignment
+-- IMPORTANT: BEFORE CREATING ANY TABLE, MAKE SURE YOU RUN THIS COMMAND 
+ADD JAR /opt/cloudera/parcels/CDH/lib/hive/lib/hive-hcatalog-core-1.1.0-cdh5.11.2.jar;
+SET hive.exec.max.dynamic.partitions=100000;
+SET hive.exec.max.dynamic.partitions.pernode=100000;
+
+
+-- CREATE EXTERNAL TABLE 
+create external table if not exists taxidata(VendorID int, tpep_pickup_datetime TIMESTAMP ,
+tpep_dropoff_datetime TIMESTAMP, Passenger_count int, Trip_distance double, PULocationID INT ,DOLocationID INT ,
+RateCodeID INT ,Store_and_fwd_flag STRING,Payment_type int,Fare_amount double,Extra double,MTA_tax double,Improvement_surcharge double,
+Tip_amount double,Tolls_amount double,Total_amount double
+) 
+row format delimited fields terminated by ','
+location '/common_folder/nyc_taxi_data/'
+tblproperties ("skip.header.line.count"="1");
+
+-- RUN QUERY ON THIS TABLE
+select * from taxidata limit 10;
+
+-- Total Number of rows =1174569
+    select count(*) from taxidata limit 10;
+
+-- How many records has each TPEP provider provided(all data)
+SELECT VendorID, count(*) FROM taxidata GROUP BY VendorID;
+-- 2	647183
+-- 1	527386
+
+-- How many records has each TPEP provider provided(only for nov and dec month)
+SELECT VendorID, count(*) FROM taxidata WHERE tpep_pickup_datetime>='2017-11-01 00:00:00.0' and tpep_pickup_datetime<='2017-12-31 23:59:59.0' GROUP BY VendorID;
+-- 2	647169
+-- 1	527386
+
+-- Create new table from nov to dec
+CREATE TABLE taxidatanovdec AS SELECT * FROM taxidata WHERE tpep_pickup_datetime>='2017-11-01 00:00:00.0' and tpep_pickup_datetime<='2017-12-31 23:59:59.0' ;
+
+
+-- Data Issues
+-- Wrong year data ,present from 2003,2008,2018
+-- 6824 rows with 0 passangers
+-- rows with tpep_pickup_datetime>tpep_dropoff_datetime
+-- 6481 rows with tpep_pickup_datetime=tpep_dropoff_datetime 
+-- 681 rows with Total_amount<=0
+-- rows with Trip_distance <= 0
+select * from taxidata SORT BY tpep_pickup_datetime asc limit 10 ;
+select (passenger_count),count(passenger_count) from taxidatanovdec group by passenger_count;
+SELECT count(*) from taxidatanovdec where tpep_pickup_datetime>tpep_dropoff_datetime;
+SELECT count(*) from taxidatanovdec where tpep_pickup_datetime=tpep_dropoff_datetime ;
+SELECT count(*) from taxidatanovdec where Total_amount<=0;
+
+
+
+
+-- finding out which provide make more mistakes
+-- Total_amount<=0
+-- 2    639
+-- 1	42
+SELECT VendorID,count(*) from taxidatanovdec where Total_amount<=0  GROUP BY VendorID;
+
+-- passengers 0 ,group by VendorID
+-- 2	11
+-- 1	6813
+SELECT VendorID,count(*) from taxidatanovdec where Passenger_count=0 GROUP BY VendorID;
+
+-- tpep_pickup_datetime>tpep_dropoff_datetime
+-- 1	73
+SELECT VendorID,count(*) from taxidatanovdec where tpep_pickup_datetime>tpep_dropoff_datetime  GROUP BY VendorID;
+
+-- vendor 1 has given more bad data
+
+
+
+-- createing partitoned orc table
+create external table if not exists nyc_taxi_part_orc_suri
+(VendorID int, tpep_pickup_datetime TIMESTAMP ,
+tpep_dropoff_datetime TIMESTAMP, Passenger_count int, Trip_distance double, PULocationID INT ,DOLocationID INT ,
+RateCodeID INT ,Store_and_fwd_flag STRING,Payment_type int,Fare_amount double,Extra double,MTA_tax double,Improvement_surcharge double,
+Tip_amount double,Tolls_amount double,Total_amount double
+) partitioned by (yr int, mnth int)
+stored as orc location '/user/hive/warehouse/taxtdata'
+tblproperties ("orc.compress"="SNAPPY");
+
+insert overwrite table nyc_taxi_part_orc_suri partition(yr, mnth)
+select *, year(tpep_pickup_datetime) as yr, month(tpep_pickup_datetime) as mnth
+ from taxidatanovdec where  Total_amount>0 and  Passenger_count>0 and tpep_pickup_datetime<tpep_dropoff_datetime;
+
+-- Questions
+-- Analysis-I
+-- Compare the overall average fare per trip for November and December.
+SELECT mnth,avg(fare_amount) from nyc_taxi_part_orc_suri GROUP BY mnth;
+-- November	13.064844952861742
+-- December		12.859148121906578
+
+-- Explore the â€˜number of passengers per tripâ€™ - how many trips are made by each level of â€˜Passenger_countâ€™? Do most people travel solo or with other people?
+SELECT Passenger_count,count(*) from nyc_taxi_part_orc_suri GROUP BY Passenger_count;
+
+-- passenger_count	_c1
+-- 1	            822028
+-- 2	            176005
+-- 3	            50493
+-- 4	            24842
+-- 5	            54362
+-- 6	            33034
+-- 7	            4
+-- 8	            2
+
+
+-- Which is the most preferred mode of payment?
+
+SELECT Payment_type,count(*) from nyc_taxi_part_orc_suri GROUP BY Payment_type;
+-- payment_type	_c1
+-- Credit card	783232
+-- Cash	371154
+-- No charge	4986
+-- Dispute	1398
+-- Credit card most preferred mode
+
+
+-- What is the average tip paid per trip? Compare the average tip with the 25th, 50th and 75th percentiles and comment whether the â€˜average tipâ€™ is a representative statistic (of the central tendency) of â€˜tip amount paidâ€™. Hint: You may use percentile_approx(DOUBLE col, p): Returns an approximate pth percentile of a numeric column (including floating point types) in the group.
+
+SELECT percentile_approx(tip_amount, 0.25),percentile_approx(tip_amount, 0.50),percentile_approx(tip_amount, 0.75) from nyc_taxi_part_orc_suri;
+SELECT percentile_approx(tip_amount,array(0.25,0.50,0.75,0.80,0.90,0.95)) from nyc_taxi_part_orc_suri ;
+
+-- array(0.25,0.50,0.75,0.80,0.90,0.95)
+-- [0.0,0.0,0.0,0.0,0.0,5.750420295271912]
+
+-- avg tip_amount =0.32627604090394674
+
+-- Explore the â€˜Extraâ€™ (charge) variable - what fraction of total trips have an extra charge is levied?
+SELECT count(Extra) from nyc_taxi_part_orc_suri where Extra<=0.0;
+SELECT count(Extra) from nyc_taxi_part_orc_suri where Extra>0.0;
+SELECT 537583/count(*) from nyc_taxi_part_orc_suri ;
+
+-- 46.31% of riders have Extra charge
+
+-- Analysis-II
+-- What is the correlation between the number of passengers on any given trip, and the tip paid per trip?
+SELECT CORR(passenger_count,tip_amount) from nyc_taxi_part_orc_suri ;
+-- 0.00945685750632701 very little correlation
+
+-- check the avarage 
+SELECT passenger_count,avg(tip_amount) from nyc_taxi_part_orc_suri GROUP BY passenger_count;
+
+
+-- passenger_count	    avarage	            count
+-- 1	                0.3092203063641618	822028
+-- 2	                0.3811286043009795	176005
+-- 3	                0.3512548274018268	50493
+-- 4	                0.3766270831656128	24842
+-- 5	                0.350205842316333	54362
+-- 6	                0.3426784525034885	33034
+-- 7	                3.285	            4
+-- 8	                0	                2
+-- with the large number of rides the tips are same across all passenger counts
+
+-- bucketing
+create external table if not exists nyc_taxi_bucket
+(VendorID int, tpep_pickup_datetime TIMESTAMP ,
+tpep_dropoff_datetime TIMESTAMP, Passenger_count int, Trip_distance double, PULocationID INT ,DOLocationID INT ,
+RateCodeID INT ,Store_and_fwd_flag STRING,Payment_type int,Fare_amount double,Extra double,MTA_tax double,Improvement_surcharge double,
+Tip_amount double,Tolls_amount double,Total_amount double
+) partitioned by (yr int, mnth int)
+clustered by (Tip_amount) into 5 buckets
+location '/user/hive/warehouse/give_your_bucketing_folder_name';
+
+
+insert overwrite table nyc_taxi_bucket partition(yr, mnth)
+select * from nyc_taxi_part_orc_suri;
+
+-- fraction in each bucket
+select count(*) from nyc_taxi_bucket where Tip_amount>=0 and Tip_amount<5; 
+-- 1101120/1160770= 94.86%
+select count(*) from nyc_taxi_bucket where Tip_amount>=5 and Tip_amount<10; 
+-- 56048/1160770= 4.82%
+select count(*) from nyc_taxi_bucket where Tip_amount>=10 and Tip_amount<15; 
+-- 2090/1160770= 0.18%
+select count(*) from nyc_taxi_bucket where Tip_amount>=15 and Tip_amount<20; 
+-- 1201/1160770= 0.1%
+select count(*) from nyc_taxi_bucket where Tip_amount>=20 ; 
+-- 311/1160770= 0.02%
+
+
+-- Which month has a greater average â€˜speedâ€™ - November or December? Note that the variable â€˜speedâ€™ will have to be derived from other metrics. Hint: You have columns for distance and time.
+select mnth,avg(Trip_distance/datediff(tpep_dropoff_datetime,tpep_pickup_datetime)) as speed from nyc_taxi_bucket group by mnth; 
+-- mnth         speed
+-- December	    5.099748757984384
+-- November	    5.268701613118477
+-- November has a higher avarage speed
+
+
+-- Analyse the average speed of the most happening days of the year, i.e. 31st December (New yearâ€™s eve) and 25th December (Christmas) and compare it with the overall average. 
+-- avarage speed=5.179294802901425
+select avg(Trip_distance/datediff(tpep_dropoff_datetime,tpep_pickup_datetime)) as speed from nyc_taxi_bucket ; 
+
+-- avarage speed on 31 dec=4.831981132075471
+select avg(Trip_distance/datediff(tpep_dropoff_datetime,tpep_pickup_datetime)) as speed from nyc_taxi_bucket where tpep_pickup_datetime  between '2017-12-31 00:00:00.00' and '2017-12-31 23:59:59.9' ; 
+
+-- avarage speed on 25 dec=5.028163265306124
+select avg(Trip_distance/datediff(tpep_dropoff_datetime,tpep_pickup_datetime)) as speed from nyc_taxi_bucket where tpep_pickup_datetime  between '2017-12-25 00:00:00.00' and '2017-12-25 23:59:59.9' ; 
+
+
+-- as seen the avarage speed decreases from normal 5.17 to 5.02 on 25 dec to 4.8 on 31 dec
+
+-- End
+
