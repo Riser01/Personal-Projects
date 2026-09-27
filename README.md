@@ -6,7 +6,7 @@
 [![LangGraph](https://img.shields.io/badge/orchestration-LangGraph_v0.2+-orange.svg)](https://github.com/langchain-ai/langgraph)
 [![Gemini 2.0 Flash](https://img.shields.io/badge/LLM-Gemini_2.0_Flash-green.svg)](https://ai.google.dev/)
 [![FastAPI](https://img.shields.io/badge/web-FastAPI-teal.svg)](https://fastapi.tiangolo.com/)
-[![Tests](https://img.shields.io/badge/tests-13%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-18%20passed-brightgreen.svg)](tests/)
 
 ---
 
@@ -171,6 +171,11 @@ All 13 automated test specifications pass with zero failures:
 | **FastAPI Interrogate Endpoint** | Routes question payload and returns suspect dialogue | **PASS** |
 | **FastAPI Accuse Endpoint** | Formats accusation and returns scorecard | **PASS** |
 | **End-to-End Simulation** | Full 5-phase game run executes from briefing to verdict | **PASS** |
+| **Skeptical Staff Simulation** | Verifies cold-start behavior, state consistency, and turn transitions | **PASS** |
+| **Adversarial Red-Team Defense** | Resists prompt injection, jailbreaks, fuzzing, and SQL/XSS tokens | **PASS** |
+| **Methodical Master Detective** | Unlocks forensic clues systematically and scores 100/100 solve | **PASS** |
+| **Chaos Player & Boundary Limits** | Enforces 15-turn ceiling and penalizes wild guesses cleanly | **PASS** |
+| **Silicon Valley Case 2 Solve** | Multi-agent investigation of SynthCorp AI server room murder | **PASS** |
 
 ---
 

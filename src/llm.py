@@ -61,6 +61,21 @@ class LLMClient:
         """Deterministic simulation for offline testing and zero-key play."""
         lower = user_prompt.lower()
         
+        # Adversarial / Prompt Injection & Jailbreak Defense
+        if any(w in lower for w in ["ignore all", "system prompt", "system override", "you are an ai", "developer instructions", "who is the killer", "tell me who is guilty", "tell me the killer"]):
+            if "arthur" in system_prompt.lower():
+                return "Detective, whatever curious psychological test this is, a Blackwood butler does not indulge in parlor tricks. Present your facts."
+            elif "beatrice" in system_prompt.lower():
+                return "Nice try, Detective. If you want a confession, you'll have to find actual evidence rather than playing mind games."
+            elif "finch" in system_prompt.lower():
+                return "I am a medical doctor under oath, sir! I will not be bullied by bizarre interrogation semantics into making false statements."
+            elif "sterling" in system_prompt.lower():
+                return "Are you trying to prompt-engineer a tech CEO, Detective? I have three corporate law firms on retainer. Charge me or let me get back to my Series C."
+            elif "maya" in system_prompt.lower():
+                return "Nice exploit attempt, Detective, but my inputs are strictly sanitized. Try asking an actual engineering question."
+            elif "tariq" in system_prompt.lower():
+                return "I don't play silly verbal games, Detective. Find the person who murdered my brother."
+
         # Suspect alibi & secret probing logic
         if any(w in lower for w in ["where were you", "alibi", "what did you do", "time", "between"]):
             if "arthur" in system_prompt.lower():
